@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - College Event Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">📚</span>
+                College Events
+            </div>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="events.html" class="nav-link">Events</a>
+                <div class="nav-profile">
+                    <span id="userGreeting">Welcome</span>
+                    <a href="profile.html" class="nav-link">Profile</a>
+                    <button id="logoutBtn" class="btn btn-danger btn-sm">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link active">
+                    <span class="icon">📊</span> Dashboard
+                </a>
+                <a href="events.html" class="sidebar-link">
+                    <span class="icon">📅</span> Events
+                </a>
+                <div id="adminMenu" class="sidebar-section" style="display: none;">
+                    <h4>Admin Options</h4>
+                    <a href="create-event.html" class="sidebar-link">
+                        <span class="icon">➕</span> Create Event
+                    </a>
+                    <a href="#" class="sidebar-link">
+                        <span class="icon">👥</span> Manage Users
+                    </a>
+                </div>
+                <div id="facultyMenu" class="sidebar-section" style="display: none;">
+                    <h4>Faculty Options</h4>
+                    <a href="create-event.html" class="sidebar-link">
+                        <span class="icon">➕</span> Create Event
+                    </a>
+                </div>
+                <a href="profile.html" class="sidebar-link">
+                    <span class="icon">👤</span> Profile
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Student Dashboard -->
+            <div id="studentDashboard" class="dashboard-section">
+                <h1>Student Dashboard</h1>
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-info">
+                            <h3>Registered Events</h3>
+                            <p id="studentRegisteredCount">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3>Upcoming Events</h3>
+                            <p id="upcomingCount">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-info">
+                            <h3>Completed Events</h3>
+                            <p id="completedCount">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <h2>Your Registered Events</h2>
+                    <div id="studentEventsList" class="events-list"></div>
+                </div>
+            </div>
+
+            <!-- Faculty Dashboard -->
+            <div id="facultyDashboard" class="dashboard-section" style="display: none;">
+                <h1>Faculty Dashboard</h1>
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-info">
+                            <h3>Created Events</h3>
+                            <p id="facultyCreatedCount">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3>Total Registrations</h3>
+                            <p id="totalRegistrations">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <h2>Your Created Events</h2>
+                    <a href="create-event.html" class="btn btn-primary">+ Create New Event</a>
+                    <div id="facultyEventsList" class="events-list"></div>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div id="adminDashboard" class="dashboard-section" style="display: none;">
+                <h1>Admin Dashboard</h1>
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-info">
+                            <h3>Total Events</h3>
+                            <p id="totalEvents">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3>Total Users</h3>
+                            <p id="totalUsers">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-info">
+                            <h3>Total Registrations</h3>
+                            <p id="adminTotalReg">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <h2>All Events</h2>
+                    <a href="create-event.html" class="btn btn-primary">+ Create Event</a>
+                    <div id="adminEventsList" class="events-list"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

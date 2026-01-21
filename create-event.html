@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Event - College Event Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">📚</span>
+                College Events
+            </div>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="events.html" class="nav-link">Events</a>
+                <div class="nav-profile">
+                    <span id="userGreeting3">Welcome</span>
+                    <a href="profile.html" class="nav-link">Profile</a>
+                    <button id="logoutBtn3" class="btn btn-danger btn-sm">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link">
+                    <span class="icon">📊</span> Dashboard
+                </a>
+                <a href="events.html" class="sidebar-link">
+                    <span class="icon">📅</span> Events
+                </a>
+                <a href="create-event.html" class="sidebar-link active">
+                    <span class="icon">➕</span> Create Event
+                </a>
+                <a href="profile.html" class="sidebar-link">
+                    <span class="icon">👤</span> Profile
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <h1>Create New Event</h1>
+
+            <div class="form-card">
+                <form id="createEventForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventName">Event Name *</label>
+                            <input 
+                                type="text" 
+                                id="eventName" 
+                                name="eventName" 
+                                placeholder="Enter event name"
+                                required
+                            >
+                            <span class="error-message" id="eventNameError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventDescription">Description *</label>
+                            <textarea 
+                                id="eventDescription" 
+                                name="description" 
+                                placeholder="Enter event description"
+                                rows="4"
+                                required
+                            ></textarea>
+                            <span class="error-message" id="descriptionError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventDate">Date *</label>
+                            <input 
+                                type="date" 
+                                id="eventDate" 
+                                name="date"
+                                required
+                            >
+                            <span class="error-message" id="dateError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventTime">Time *</label>
+                            <input 
+                                type="time" 
+                                id="eventTime" 
+                                name="time"
+                                required
+                            >
+                            <span class="error-message" id="timeError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventVenue">Venue *</label>
+                            <input 
+                                type="text" 
+                                id="eventVenue" 
+                                name="venue" 
+                                placeholder="Enter event venue"
+                                required
+                            >
+                            <span class="error-message" id="venueError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventCapacity">Capacity *</label>
+                            <input 
+                                type="number" 
+                                id="eventCapacity" 
+                                name="capacity" 
+                                placeholder="Enter event capacity"
+                                min="1"
+                                required
+                            >
+                            <span class="error-message" id="capacityError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eventOrganizer">Organizer *</label>
+                            <input 
+                                type="text" 
+                                id="eventOrganizer" 
+                                name="organizer" 
+                                placeholder="Enter organizer name"
+                                required
+                            >
+                            <span class="error-message" id="organizerError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Create Event</button>
+                        <a href="dashboard.html" class="btn btn-secondary">Cancel</a>
+                    </div>
+
+                    <div class="message-container" id="createEventMessage"></div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

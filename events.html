@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - College Event Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">📚</span>
+                College Events
+            </div>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="events.html" class="nav-link active">Events</a>
+                <div class="nav-profile">
+                    <span id="userGreeting2">Welcome</span>
+                    <a href="profile.html" class="nav-link">Profile</a>
+                    <button id="logoutBtn2" class="btn btn-danger btn-sm">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Menu</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="sidebar-link">
+                    <span class="icon">📊</span> Dashboard
+                </a>
+                <a href="events.html" class="sidebar-link active">
+                    <span class="icon">📅</span> Events
+                </a>
+                <div id="adminMenu2" class="sidebar-section" style="display: none;">
+                    <h4>Admin Options</h4>
+                    <a href="create-event.html" class="sidebar-link">
+                        <span class="icon">➕</span> Create Event
+                    </a>
+                </div>
+                <div id="facultyMenu2" class="sidebar-section" style="display: none;">
+                    <h4>Faculty Options</h4>
+                    <a href="create-event.html" class="sidebar-link">
+                        <span class="icon">➕</span> Create Event
+                    </a>
+                </div>
+                <a href="profile.html" class="sidebar-link">
+                    <span class="icon">👤</span> Profile
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <h1>All Events</h1>
+            
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="statusFilter">Filter by Status:</label>
+                    <select id="statusFilter">
+                        <option value="">All Events</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="ongoing">Ongoing</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search events..." 
+                        class="search-input"
+                    >
+                </div>
+            </div>
+
+            <!-- Events Grid -->
+            <div id="eventsGrid" class="events-grid">
+                <!-- Events will be loaded here by JavaScript -->
+            </div>
+
+            <div id="noEventsMessage" style="display: none;">
+                <p class="text-center">No events found</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div id="eventModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modalEventDetails"></div>
+            <div id="modalActions"></div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
