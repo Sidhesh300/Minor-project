@@ -2,9 +2,9 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY college_management_system/package*.json ./
 
-RUN npm ci
+RUN npm install
 
 COPY . .
 
