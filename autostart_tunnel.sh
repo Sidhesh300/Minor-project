@@ -27,6 +27,11 @@ docker run -dp 3020:80 --name cms_container --rm "$IMAGE_NAME"
 echo "Starting Cloudflare Tunnel..."
 cloudflared tunnel --url http://localhost:$LOCAL_PORT > "$LOG_FILE" 2>&1 &
 
+cd Download/Minor-project
+git init
+git add -A
+git commit -m "URL changed"
+git push origin main
 counter=0
 while [ $counter -lt 30 ]; do
     NEW_URL=$(grep -o 'https://[a-z-]*\.trycloudflare\.com' "$LOG_FILE" | tail -n 1)
