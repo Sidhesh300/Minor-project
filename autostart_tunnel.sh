@@ -24,7 +24,7 @@ done
 echo "Running perfect locally"
 
 echo "Starting Cloudflare Tunnel..."
-cloudflared tunnel --protocol http2 --url http://localhost:3020 > "$PROJECT_DIR/$LOG_FILE" 2>&1 &
+cloudflared tunnel --protocol http2 --no-autoupdate --edge-ip-version 4 --url http://localhost:3020 > "$LOG_FILE" 2>&1 &
 
 counter=0
 while [ $counter -lt 30 ]; do
