@@ -1,0 +1,22 @@
+2026-01-22T10:16:49Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+2026-01-22T10:16:49Z INF Requesting new quick Tunnel on trycloudflare.com...
+2026-01-22T10:16:53Z INF +--------------------------------------------------------------------------------------------+
+2026-01-22T10:16:53Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+2026-01-22T10:16:53Z INF |  https://vegetable-routing-measured-nicholas.trycloudflare.com                             |
+2026-01-22T10:16:53Z INF +--------------------------------------------------------------------------------------------+
+2026-01-22T10:16:53Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
+2026-01-22T10:16:53Z INF Version 2026.1.1 (Checksum 8476506f0817b2d10d519d829bb5321b65ff20dbcc4bb0266c608774f1d38b28)
+2026-01-22T10:16:53Z INF GOOS: darwin, GOVersion: go1.25.6, GoArch: arm64
+2026-01-22T10:16:53Z INF Settings: map[ha-connections:1 protocol:quic url:http://localhost:3020]
+2026-01-22T10:16:53Z INF cloudflared will not automatically update if installed by a package manager.
+2026-01-22T10:16:53Z INF Generated Connector ID: e8cbcd88-2421-468e-8967-6c5242d1ccca
+2026-01-22T10:16:53Z INF Initial protocol quic
+2026-01-22T10:16:53Z INF ICMP proxy will use 192.168.1.73 as source for IPv4
+2026-01-22T10:16:53Z INF ICMP proxy will use fe80::cd7:43e0:cd9a:75c9 in zone en0 as source for IPv6
+2026-01-22T10:16:53Z INF Created ICMP proxy listening on 192.168.1.73:0
+2026-01-22T10:17:22Z INF ICMP proxy will use 192.168.1.73 as source for IPv4
+2026-01-22T10:17:22Z INF ICMP proxy will use fe80::cd7:43e0:cd9a:75c9 in zone en0 as source for IPv6
+2026-01-22T10:17:22Z INF Starting metrics server on 127.0.0.1:20242/metrics
+2026-01-22T10:18:02Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveP256] connIndex=0 event=0 ip=198.41.192.37
+2026-01-22T10:18:03Z INF Registered tunnel connection connIndex=0 connection=04452a92-2b87-4262-ba71-2c61d60be05d event=0 ip=198.41.192.37 location=bom08 protocol=quic
+2026-01-22T10:18:07Z ERR Failed to initialize DNS local resolver error="lookup region1.v2.argotunnel.com: i/o timeout"
