@@ -1,16 +1,16 @@
-2026-01-22T16:06:44Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
-2026-01-22T16:06:44Z INF Requesting new quick Tunnel on trycloudflare.com...
-2026-01-22T16:06:49Z INF +--------------------------------------------------------------------------------------------+
-2026-01-22T16:06:49Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
-2026-01-22T16:06:49Z INF |  https://enlarge-secret-turbo-role.trycloudflare.com                                       |
-2026-01-22T16:06:49Z INF +--------------------------------------------------------------------------------------------+
-2026-01-22T16:06:49Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
-2026-01-22T16:06:49Z INF Version 2026.1.1 (Checksum 8476506f0817b2d10d519d829bb5321b65ff20dbcc4bb0266c608774f1d38b28)
-2026-01-22T16:06:49Z INF GOOS: darwin, GOVersion: go1.25.6, GoArch: arm64
-2026-01-22T16:06:49Z INF Settings: map[edge-ip-version:4 ha-connections:1 no-autoupdate:true p:http2 protocol:http2 url:http://localhost:3020]
-2026-01-22T16:06:49Z INF cloudflared will not automatically update if installed by a package manager.
-2026-01-22T16:06:49Z INF Generated Connector ID: 550c3473-8fd7-426e-97af-c5a5f7bacfeb
-2026-01-22T16:06:49Z INF Initial protocol http2
-2026-01-22T16:06:49Z INF ICMP proxy will use 192.168.1.73 as source for IPv4
-2026-01-22T16:06:49Z INF ICMP proxy will use fe80::cd7:43e0:cd9a:75c9 in zone en0 as source for IPv6
-2026-01-22T16:06:49Z INF Created ICMP proxy listening on 192.168.1.73:0
+2026-01-24T08:33:41Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+2026-01-24T08:33:41Z INF Requesting new quick Tunnel on trycloudflare.com...
+2026-01-24T08:33:45Z INF +--------------------------------------------------------------------------------------------+
+2026-01-24T08:33:45Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+2026-01-24T08:33:45Z INF |  https://consistency-msie-stomach-dom.trycloudflare.com                                    |
+2026-01-24T08:33:45Z INF +--------------------------------------------------------------------------------------------+
+2026-01-24T08:33:45Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
+2026-01-24T08:33:45Z INF Version 2026.1.1 (Checksum 8476506f0817b2d10d519d829bb5321b65ff20dbcc4bb0266c608774f1d38b28)
+2026-01-24T08:33:45Z INF GOOS: darwin, GOVersion: go1.25.6, GoArch: arm64
+2026-01-24T08:33:45Z INF Settings: map[edge-ip-version:4 ha-connections:1 no-autoupdate:true p:http2 protocol:http2 url:http://localhost:3020]
+2026-01-24T08:33:45Z INF cloudflared will not automatically update if installed by a package manager.
+2026-01-24T08:33:45Z INF Generated Connector ID: 8b74b6e6-e1c6-4b5b-be0d-65166c47b04d
+2026-01-24T08:33:45Z INF Initial protocol http2
+2026-01-24T08:33:45Z INF ICMP proxy will use 192.168.1.73 as source for IPv4
+2026-01-24T08:33:45Z INF ICMP proxy will use fe80::804:5898:319a:ebd2 in zone en0 as source for IPv6
+2026-01-24T08:33:45Z INF Created ICMP proxy listening on 192.168.1.73:0
