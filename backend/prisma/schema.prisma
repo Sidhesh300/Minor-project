@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String   @id @default(uuid())
+  name             String
+  email            String   @unique
+  password         String
+  role             String   @default("student") // 'student', 'faculty', 'admin'
+  registeredEvents Event[]  @relation("EventRegistrations")
+  createdAt        DateTime @default(now())
+}
+
+model Event {
+  id              String   @id @default(uuid())
+  title           String   
+  description     String
+  date            String   
+  time            String   
+  location        String   
+  category        String   @default("Technical")
+  image           String   @default("https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=1000")
+  price           Float    @default(0)
+  capacity        Int
+  status          String   @default("upcoming")
+  organizer       String
+  registeredUsers User[]   @relation("EventRegistrations")
+  createdAt       DateTime @default(now())
+}

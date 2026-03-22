@@ -17,6 +17,7 @@
             <div class="nav-menu">
                 <a href="dashboard.html" class="nav-link">Dashboard</a>
                 <a href="events.html" class="nav-link active">Events</a>
+                <a href="create-event.html" class="nav-link" id="navCreateEvent2" style="display: none;">Create Event</a>
                 <div class="nav-profile">
                     <span id="userGreeting2">Welcome</span>
                     <a href="profile.html" class="nav-link">Profile</a>
@@ -59,7 +60,10 @@
 
         <!-- Main Content -->
         <main class="dashboard-content">
-            <h1>All Events</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 style="margin: 0;">All Events</h1>
+                <a href="create-event.html" class="btn btn-primary" id="mainCreateEventBtn" style="display: none;">+ Create Event</a>
+            </div>
             
             <!-- Filter Section -->
             <div class="filter-section">

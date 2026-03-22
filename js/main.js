@@ -108,7 +108,7 @@ function loadUpcomingEvents() {
     const eventsContainer = document.getElementById('eventsContainer');
     if (!eventsContainer) return;
 
-    const upcomingEvents = dummyEvents.filter(event => event.status === 'upcoming').slice(0, 6);
+    const upcomingEvents = events.filter(event => event.status === 'upcoming').slice(0, 6);
     
     eventsContainer.innerHTML = upcomingEvents.map(event => {
         const formattedDate = new Date(event.date).toLocaleDateString('en-US', { 
@@ -119,7 +119,7 @@ function loadUpcomingEvents() {
         
         return `
             <div class="event-item">
-                <div class="event-image">${event.emoji}</div>
+                <div class="event-image">${event.emoji || '📅'}</div>
                 <div class="event-content">
                     <div class="event-date">${formattedDate}</div>
                     <div class="event-title">${event.name}</div>
@@ -135,10 +135,6 @@ function loadUpcomingEvents() {
 // ========================================
 // INITIALIZE ON PAGE LOAD
 // ========================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    loadUpcomingEvents();
-});
 
 // Original dummy users
 
@@ -161,7 +157,7 @@ let users = [...dummyUsers];
 // INITIALIZATION
 // ========================================
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Check if user is logged in
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
@@ -169,14 +165,28 @@ document.addEventListener('DOMContentLoaded', function() {
         updateUIForLoggedInUser();
     }
 
+    // Fetch up-to-date events from backend
+    try {
+        const response = await fetch('http://localhost:5001/api/events');
+        const data = await response.json();
+        if (response.ok && data.success && data.data && data.data.length > 0) {
+            events = data.data; // use real events instead of dummy
+            // Merge dummy data with real ones if necessary, but real ones take precedence for simplicity
+        }
+    } catch (e) {
+        console.error('Could not load events from backend, falling back to dummy data', e);
+    }
+
     // Initialize page-specific functionality
+    loadUpcomingEvents();
+    
     if (document.getElementById('loginForm')) {
         initLoginPage();
     }
     if (document.getElementById('registerForm')) {
         initRegisterPage();
     }
-    if (document.body.classList.contains('dashboard-container')) {
+    if (document.querySelector('.dashboard-container')) {
         // Dashboard pages
         initDashboard();
         initEvents();
@@ -197,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function initLoginPage() {
     const form = document.getElementById('loginForm');
     
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         clearErrorMessages();
 
@@ -228,18 +238,56 @@ function initLoginPage() {
 
         if (!isValid) return;
 
-        // Find user
-        const user = users.find(u => u.email === email && u.password === password && u.role === role);
+        // Find user via Backend API
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Logging in...';
+        submitBtn.disabled = true;
 
-        if (user) {
-            currentUser = { ...user };
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-            showSuccess('loginMessage', 'Login successful! Redirecting...');
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 1500);
-        } else {
-            showError('loginMessage', 'Invalid email, password, or role. Please try again.');
+        try {
+            const response = await fetch('http://localhost:5001/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                if (data.role !== role) {
+                    showError('loginMessage', 'Incorrect role selected for this account.');
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                currentUser = {
+                    id: data._id,
+                    name: data.name,
+                    email: data.email,
+                    role: data.role,
+                    token: data.token,
+                    registeredEvents: []
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showSuccess('loginMessage', 'Login successful! Redirecting...');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                // If Zod validation errors exist:
+                let errorMsg = data.message;
+                if (data.errors && data.errors.length > 0) {
+                    errorMsg = data.errors[0].message;
+                }
+                showError('loginMessage', errorMsg || 'Invalid credentials');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        } catch (error) {
+            showError('loginMessage', 'Server connection error. Please try again.');
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
     });
 }
@@ -251,7 +299,7 @@ function initLoginPage() {
 function initRegisterPage() {
     const form = document.getElementById('registerForm');
     
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         clearErrorMessages();
 
@@ -275,9 +323,6 @@ function initRegisterPage() {
         } else if (!isValidEmail(email)) {
             showError('regEmailError', 'Please enter a valid email');
             isValid = false;
-        } else if (users.some(u => u.email === email)) {
-            showError('regEmailError', 'Email already registered');
-            isValid = false;
         }
 
         if (!password || password.length < 6) {
@@ -297,24 +342,49 @@ function initRegisterPage() {
 
         if (!isValid) return;
 
-        // Create new user
-        const newUser = {
-            id: users.length + 1,
-            name: name,
-            email: email,
-            password: password,
-            role: role,
-            registeredEvents: []
-        };
+        // Register user via Backend API
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Registering...';
+        submitBtn.disabled = true;
 
-        users.push(newUser);
-        currentUser = { ...newUser };
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        
-        showSuccess('registerMessage', 'Registration successful! Redirecting to dashboard...');
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1500);
+        try {
+            const response = await fetch('http://localhost:5001/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password, role })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                currentUser = {
+                    id: data._id,
+                    name: data.name,
+                    email: data.email,
+                    role: data.role,
+                    token: data.token,
+                    registeredEvents: []
+                };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showSuccess('registerMessage', 'Registration successful! Redirecting to dashboard...');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                let errorMsg = data.message;
+                if (data.errors && data.errors.length > 0) {
+                    errorMsg = data.errors[0].message;
+                }
+                showError('registerMessage', errorMsg || 'Registration failed');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        } catch (error) {
+            showError('registerMessage', 'Server connection error. Please try again.');
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
     });
 }
 
@@ -654,7 +724,7 @@ function initCreateEvent() {
 
     updateUserGreeting();
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
         clearErrorMessages();
 
@@ -706,35 +776,50 @@ function initCreateEvent() {
 
         if (!isValid) return;
 
-        // Determine event status
-        const eventDate = new Date(date + 'T' + time);
-        const now = new Date();
-        let status = 'upcoming';
-        if (eventDate < now) {
-            status = 'completed';
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Creating...';
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch('http://localhost:5001/api/events', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${currentUser.token}`
+                },
+                body: JSON.stringify({
+                    name,
+                    description,
+                    date,
+                    time,
+                    venue,
+                    capacity: parseInt(capacity),
+                    organizer
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                showSuccess('createEventMessage', 'Event created successfully!');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            } else {
+                let errorMsg = data.message;
+                if (data.errors && data.errors.length > 0) {
+                    errorMsg = data.errors[0].message;
+                }
+                showError('createEventMessage', errorMsg || 'Failed to create event');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        } catch (error) {
+            showError('createEventMessage', 'Server connection error. Please try again.');
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
-
-        // Create new event
-        const newEvent = {
-            id: events.length + 1,
-            name: name,
-            description: description,
-            date: date,
-            time: time,
-            venue: venue,
-            capacity: capacity,
-            organizer: organizer,
-            status: status,
-            registeredCount: 0,
-            registeredUsers: []
-        };
-
-        events.push(newEvent);
-        showSuccess('createEventMessage', 'Event created successfully!');
-
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1500);
     });
 }
 
@@ -919,6 +1004,24 @@ function updateUserGreeting() {
     greetings.forEach(greeting => {
         greeting.textContent = `Hi, ${currentUser.name}`;
     });
+
+    const navCreateEventBtns = document.querySelectorAll('[id^="navCreateEvent"]');
+    navCreateEventBtns.forEach(btn => {
+        if (currentUser.role === 'admin' || currentUser.role === 'faculty') {
+            btn.style.display = 'block';
+        } else {
+            btn.style.display = 'none';
+        }
+    });
+
+    const mainCreateEventBtn = document.getElementById('mainCreateEventBtn');
+    if (mainCreateEventBtn) {
+        if (currentUser.role === 'admin' || currentUser.role === 'faculty') {
+            mainCreateEventBtn.style.display = 'inline-block';
+        } else {
+            mainCreateEventBtn.style.display = 'none';
+        }
+    }
 }
 
 function isValidEmail(email) {

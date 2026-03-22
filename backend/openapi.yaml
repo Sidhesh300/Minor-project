@@ -1,0 +1,146 @@
+openapi: 3.0.0
+info:
+  title: College Event Management API
+  description: API for managing college events, users, and registrations.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5001/api
+    description: Local development server
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum: [student, faculty, admin]
+      responses:
+        '201':
+          description: User registered successfully
+  /auth/login:
+    post:
+      summary: Login
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: OK
+  /auth/me:
+    get:
+      summary: Get current authenticated user
+      tags: [Auth]
+      responses:
+        '200':
+          description: OK
+  /events:
+    get:
+      summary: Get all events
+      tags: [Events]
+      security: []
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create an event (Admin/Faculty only)
+      tags: [Events]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, description, date, time, capacity, location, organizer]
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                date:
+                  type: string
+                time:
+                  type: string
+                capacity:
+                  type: integer
+                location:
+                  type: string
+                organizer:
+                  type: string
+                image:
+                  type: string
+      responses:
+        '201':
+          description: Created
+  /events/{id}:
+    get:
+      summary: Get a single event
+      tags: [Events]
+      security: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: Delete an event
+      tags: [Events]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+  /events/{id}/register:
+    post:
+      summary: Register for an event
+      tags: [Events]
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
